@@ -1,5 +1,7 @@
 function createCounter(value) {
     let counter = {
+        counterMinValue: -Infinity,
+        counterMaxValue: Infinity,
         counter: isNaN(value) ? 0 : value,
         decrement(){
             this.counter-=1;
@@ -7,6 +9,12 @@ function createCounter(value) {
         increment(value){
             this.counter+=1;
         },
+        minValue(value){
+            isNaN(value) ? this.counterMinValue = -Infinity : this.counterMinValue = value 
+        },
+        maxValue(value){
+            isNaN(value) ? this.counterMaxValue = Infinity : this.counterMaxValue = value 
+        }
     }
 
     let decrementButton = document.createElement('button')
@@ -36,7 +44,8 @@ function createCounter(value) {
 
     function render(){
         counterValue.textContent = counter.counter.toString()
-
+        counter.counter<=counter.counterMinValue ? decrementButton.disabled = true : decrementButton.disabled = false
+        counter.counter>=counter.counterMaxValue ? incrementButton.disabled = true : incrementButton.disabled = false
     }
 
     render()
@@ -48,7 +57,9 @@ function createCounter(value) {
 const counter_1 = createCounter()
 const counter_2 = createCounter(-6)
 const counter_3 = createCounter(10)
-    
+    counter_1.minValue(-3)
+    counter_1.maxValue(6)
+
 
 
 console.log(counter_1.counter);
